@@ -4,7 +4,7 @@ import { QRCodeCanvas } from "qrcode.react";
 import "./QRPage.css";
 
 const PAYMENT_API_URL = "https://checkout.test.paycom.uz/api";
-const PAYMENT_AUTH = "5e730e8e0b852a417aa49ceb:ZPDODSiTYKuX0jyO7Kl2to4rQbNwG08jbghj";
+const PAYMENT_AUTH = "675ac1ca47f4e3e488ef4791:krd&yymqu#mU1K4Uo%3o28trTEwB5E@T2XCP";
 
 const ICAFE_MEMBERS_API =
   "https://api.icafecloud.com/api/v2/cafe/78949/members/action/suggestMembers";

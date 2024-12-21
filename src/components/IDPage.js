@@ -48,7 +48,8 @@ const IDPage = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-Auth": "5e730e8e0b852a417aa49ceb:ZPDODSiTYKuX0jyO7Kl2to4rQbNwG08jbghj",
+          "X-Auth": "675ac1ca47f4e3e488ef4791:krd&yymqu#mU1K4Uo%3o28trTEwB5E@T2XCP",
+          
         },
         body: JSON.stringify(payload),
       });
