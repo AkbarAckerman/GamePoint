@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { QRCodeCanvas } from "qrcode.react";
 import "./QRPage.css";
 
-const PAYMENT_API_URL = "https://checkout.test.paycom.uz/api";
+const PAYMENT_API_URL = "https://checkout.paycom.uz/api";
 const PAYMENT_AUTH = "675ac1ca47f4e3e488ef4791:krd&yymqu#mU1K4Uo%3o28trTEwB5E@T2XCP";
 
 const ICAFE_MEMBERS_API =

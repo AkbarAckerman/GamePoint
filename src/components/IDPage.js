@@ -44,7 +44,7 @@ const IDPage = () => {
     };
   
     try {
-      const response = await fetch("https://checkout.test.paycom.uz/api", {
+      const response = await fetch("https://checkout.paycom.uz/api", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
