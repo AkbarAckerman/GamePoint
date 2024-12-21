@@ -1,0 +1,58 @@
+/* General Page Layout */
+.id-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(145deg, #1c1c1c, #0d0d0d); /* Black-grey background */
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Logo */
+  .logo {
+    max-width: 300px;
+    margin-bottom: 10px;
+  }
+  
+  /* Input Field */
+  .input-id {
+    width: 300px;
+    padding: 12px;
+    margin: 20px 0;
+    font-size: 16px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #2c2c2c;
+    color: white;
+    outline: none;
+    text-align: center;
+  }
+  
+  .input-id::placeholder {
+    color: #aaa;
+  }
+  
+  /* Buttons */
+  .buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .btn {
+    padding: 12px 20px;
+    background: #007bff; /* Blue button */
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .btn:hover {
+    background: #0056b3; /* Darker blue on hover */
+  }
+  

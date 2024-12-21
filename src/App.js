@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import IDPage from "./components/IDPage";
+import QRPage from "./components/QRPage";
+import ClickQr from "./components/ClickQr";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<IDPage />} />
+        <Route path="/qr" element={<QRPage />} />
+        <Route path="/clickqr" element={<ClickQr />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;

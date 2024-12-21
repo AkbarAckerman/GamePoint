@@ -1,0 +1,84 @@
+/* General Page Layout */
+.qr-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(145deg, #1c1c1c, #0d0d0d); /* Black-grey background */
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Logo */
+  .logo {
+    max-width: 150px;
+    margin-bottom: 20px;
+  }
+  
+  /* QR Code */
+  .qr-page .qr-code {
+    margin: 20px 0;
+  }
+  
+  /* Text Below QR Code */
+  .qr-page p {
+    font-size: 16px;
+    margin: 10px 0;
+  }
+  
+  /* Button */
+  .btn {
+    padding: 12px 20px;
+    background: #007bff; /* Blue button */
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .btn:hover {
+    background: #0056b3; /* Darker blue on hover */
+  }
+  
+  /* Success Message */
+  .payment-success {
+    text-align: center;
+    color: #28a745; /* Green color for success */
+  }
+  
+  .payment-success h1 {
+    font-size: 100px;
+    margin: 0;
+  }
+  
+  .payment-success p {
+    font-size: 18px;
+    margin: 10px 0;
+  }
+
+  .payment-failure {
+    text-align: center;
+    color: #a72828; /* Green color for success */
+  }
+  
+  .payment-failure h1 {
+    font-size: 100px;
+    margin: 0;
+  }
+  
+  .payment-failure p {
+    font-size: 18px;
+    margin: 10px 0;
+  }
+  
+  .error-message {
+    color: #ff4d4d; /* Red for error */
+    font-size: 14px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+  }
+  
