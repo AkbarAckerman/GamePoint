@@ -1,29 +1,37 @@
-import React from "react";
-import { QRCodeCanvas } from "qrcode.react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import "./ClickQr.css";
+import { QRCodeCanvas } from "qrcode.react";
 
 const ClickQr = () => {
   const location = useLocation();
-  const { userID, amount, transactionId } = location.state || {};
+  const { amount } = location.state || {};
+  const [transactionParam, setTransactionParam] = useState("");
 
-  const service_id = "12345";
-  const merchant_id = "67890";
-  const transaction_param = transactionId || "defaultTransaction";
-  const return_url = encodeURIComponent("https://yourwebsite.com/return");
-  const card_type = "uzcard";
+  // Generate a unique transaction parameter
+  useEffect(() => {
+    const generateTransactionParam = () => {
+      return `${Date.now()}-${Math.floor(Math.random() * 1000000)}`;
+    };
+    setTransactionParam(generateTransactionParam());
+  }, []);
 
-  const paymentURL = `https://my.click.uz/services/pay?service_id=${service_id}&merchant_id=${merchant_id}&amount=${amount}&transaction_param=${transaction_param}&return_url=${return_url}&card_type=${card_type}`;
+  // Construct the payment URL
+  const paymentURL = `https://my.click.uz/services/pay?service_id=39903&merchant_id=30020&amount=${amount}&transaction_param=${transactionParam}`;
+
+  console.log("The link for QRCode is:", paymentURL);
 
   return (
-    <div className="id-page">
-      <h1>QR Code for CLICK Payment</h1>
-      <QRCodeCanvas value={paymentURL} size={256} />
-      <p>Scan the QR Code to proceed with the payment</p>
-      <div className="payment-details">
-        <p><strong>User ID:</strong> {userID}</p>
-        <p><strong>Amount:</strong> {amount}</p>
-      </div>
+    <div className="qr-page">
+      <h1>Scan QR to Pay</h1>
+      {transactionParam ? (
+        <>
+          <QRCodeCanvas value={paymentURL} size={256} />
+          <p>Amount: {amount}</p>
+          <p>Transaction ID: {transactionParam}</p>
+        </>
+      ) : (
+        <p>Generating QR code...</p>
+      )}
     </div>
   );
 };
