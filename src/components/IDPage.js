@@ -15,7 +15,7 @@ const IDPage = () => {
   useEffect(() => {
     const fetchServerIP = async () => {
       try {
-        const response = await axios.get("https://httpbin.org/ip");
+        const response = await axios.get("https://vm4983125.25ssd.had.wf:5000/test_ip");
         console.log("Server IP Response:", response.data);
       } catch (error) {
         console.error("Error fetching server IP:", error);
