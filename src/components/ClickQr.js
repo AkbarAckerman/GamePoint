@@ -34,14 +34,17 @@ const ClickQr = () => {
   // Handle payment status check
   const checkPaymentStatus = async () => {
     setLoading(true);
-
+  
     const authHeader = generateAuth();
     const currentDate = new Date().toISOString().split("T")[0]; // Format: YYYY-MM-DD
-    const url = `/v2/merchant/payment/status_by_mti/39903/${transactionParam}/${currentDate}`;
-
-    console.log("get request url is:", url);
+  
+    // Construct the full API URL based on the environment (localhost vs production)
+    const baseUrl = process.env.REACT_APP_API_BASE_URL || "https://api.click.uz"; // Fallback to the production URL
+    const url = `${baseUrl}/v2/merchant/payment/status_by_mti/39903/${transactionParam}/${currentDate}`;
+  
+    console.log("GET request URL is:", url);
     console.log("THE AUTH IS:", authHeader);
-
+  
     try {
       const response = await axios.get(url, {
         headers: {
@@ -57,6 +60,7 @@ const ClickQr = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="qr-page">
