@@ -37,9 +37,7 @@ const ClickQr = () => {
 
     const authHeader = generateAuth();
     const currentDate = new Date().toISOString().split("T")[0]; // Format: YYYY-MM-DD
-    const baseURL = process.env.NODE_ENV === "development" ? "" : "https://api.click.uz";
-    const url = `${baseURL}/v2/merchant/payment/status_by_mti/39903/${transactionParam}/${currentDate}`;
-
+    const url = `/v2/merchant/payment/status_by_mti/39903/${transactionParam}/${currentDate}`;
 
     console.log("get request url is:", url);
     console.log("THE AUTH IS:", authHeader);
