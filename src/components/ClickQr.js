@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { QRCodeCanvas } from "qrcode.react";
 import axios from "axios";
-import CryptoJS from "crypto-js";
+import sha1 from "sha1"; // Install this using npm: `npm install sha1`
 
 const ClickQr = () => {
   const location = useLocation();
   const { amount } = location.state || {};
   const [transactionParam, setTransactionParam] = useState("");
-  const [paymentStatus, setPaymentStatus] = useState(null); // For storing payment status
-  const [loading, setLoading] = useState(false); // For button loading state
+  const [paymentStatus, setPaymentStatus] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   // Generate a unique transaction parameter
   useEffect(() => {
@@ -22,32 +23,32 @@ const ClickQr = () => {
   // Construct the payment URL
   const paymentURL = `https://my.click.uz/services/pay?service_id=39903&merchant_id=30020&amount=${amount}&transaction_param=${transactionParam}`;
 
-  console.log("The link for QRCode is:", paymentURL);
+  console.log("paymentURL is:", paymentURL);
 
-  // Function to generate the Auth header
-  const generateAuthHeader = () => {
+  // Generate dynamic Auth header
+  const generateAuth = () => {
+    const merchantId = "49285";
+    const secretKey = "JE000r78qw";
     const timestamp = Math.floor(Date.now() / 1000); // Current timestamp in seconds
-    const secretKey = "+JE000r78qw";
-    const concatenatedString = `${timestamp}${secretKey}`;
-
-    // Generate SHA1 hash
-    const hashedString = CryptoJS.SHA1(concatenatedString).toString(CryptoJS.enc.Hex);
-
-    // Construct the Auth header
-    return `49285:${hashedString}:${timestamp}`;
+    console.log("TIMESTAMP IS:", timestamp);
+    const hash = sha1(`${timestamp}${secretKey}`); // SHA-1 encryption
+    return `${merchantId}:${hash}:${timestamp}`;
   };
+  
 
-  // Function to check payment status
+  // Handle payment status check
   const checkPaymentStatus = async () => {
-    setLoading(true); // Set loading state to true
+    setLoading(true);
+    setError(null);
+
+    const authHeader = generateAuth();
+    const currentDate = new Date().toISOString().split("T")[0]; // Format: YYYY-MM-DD
+    const url = `https://api.click.uz/v2/merchant/payment/status_by_mti/39903/${transactionParam}/${currentDate}`;
+
+    console.log("get request url is:", url);
+    console.log("THE AUTH IS:", authHeader);
+
     try {
-      const currentDate = new Date().toISOString().split("T")[0]; // Get current date in YYYY-MM-DD format
-      const url = `https://api.click.uz/v2/merchant/payment/status_by_mti/39903/${transactionParam}/${currentDate}`;
-      const authHeader = generateAuthHeader();
-
-      console.log("GET URL IS:", url);
-      console.log("generateAuthHeader", authHeader);
-
       const response = await axios.get(url, {
         headers: {
           Authorization: authHeader,
@@ -55,14 +56,11 @@ const ClickQr = () => {
           "Content-Type": "application/json",
         },
       });
-
-      console.log("Payment Status:", response.data);
-      setPaymentStatus(response.data); // Update payment status state
-    } catch (error) {
-      console.error("Error fetching payment status:", error);
-      setPaymentStatus({ error: "Failed to fetch payment status" });
+      setPaymentStatus(response.data);
+    } catch (err) {
+      setError("Failed to fetch payment status. Please try again.");
     } finally {
-      setLoading(false); // Reset loading state
+      setLoading(false);
     }
   };
 
@@ -74,18 +72,22 @@ const ClickQr = () => {
           <QRCodeCanvas value={paymentURL} size={256} />
           <p>Amount: {amount}</p>
           <p>Transaction ID: {transactionParam}</p>
+          <button onClick={checkPaymentStatus} disabled={loading}>
+            {loading ? "Checking..." : "Проверить оплату"}
+          </button>
+          {paymentStatus && (
+            <div className="payment-status">
+              <h3>Payment Status:</h3>
+              <p>Error Code: {paymentStatus.error_code}</p>
+              <p>Message: {paymentStatus.error_note}</p>
+              <p>Payment ID: {paymentStatus.payment_id}</p>
+              <p>Payment Status: {paymentStatus.payment_status}</p>
+            </div>
+          )}
+          {error && <p className="error">{error}</p>}
         </>
       ) : (
         <p>Generating QR code...</p>
-      )}
-      <button onClick={checkPaymentStatus} disabled={loading}>
-        {loading ? "Checking..." : "Проверить оплату"}
-      </button>
-      {paymentStatus && (
-        <div className="payment-status">
-          <h2>Payment Status</h2>
-          <pre>{JSON.stringify(paymentStatus, null, 2)}</pre>
-        </div>
       )}
     </div>
   );
